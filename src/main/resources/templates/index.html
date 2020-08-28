@@ -1,0 +1,63 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head>
+        <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">
+        <title>Getting Started: Serving Web Content</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col align-self-center">
+                    <h4>Search a project in github</h4>
+                    <form th:action="@{/search}">
+                        <input type="text" th:name="projectName" placeholder="search a project" maxlength="30"/>
+                        <button type="submit">search</button>
+                    </form>
+                </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <table>
+                            <thead> <h5>Projects</h5> </thead>
+                            <tbody>
+                                <tr th:each="project : ${projects}">
+                                    <td><a th:href="@{/getDetails/{owner}/{name}(owner = ${project.owner.login},name = ${project.name})}" >[[${project.name}]]</a></td>
+                                </tr>
+                                <tr th:each="record : ${records}">
+                                    <td><a th:href="@{/getDetails/{owner}/{name}(owner = ${record.author},name = ${record.project})}" >[[${record.project}]]</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <div>
+                            <table>
+                                <thead>
+                                    <h5> /[[${owner}]]/[[${project}]] Details </h5>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a th:href="@{/save/{owner}/{name}(owner = ${owner},name = ${project})}" ><span> Save for later </span></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h6>contributors</h6></td>
+                                        <td><h6>commits</h6></td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr th:each="stat : ${stats}">
+                                        <td><span> [[${stat.author.login}]] </span></td>
+                                        <td><span> [[${stat.total}]] </span></td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
